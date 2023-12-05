@@ -12,20 +12,18 @@ export default function Quiz () {
     React.useEffect(()=>{
         fetch ('https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple')
             .then (res=>res.json())
-            .then (data=>setAlldata(data.results))
+            .then (data=>{
+                setAlldata(data.results)
+                const correctAnswersArray = data.results.map ((data)=>{
+                    return (
+                        data.correct_answer
+                    )
+                })
+                setCorrectAnswers(correctAnswersArray)
+            })
             setLoading(false)
            
     },[])
-
-    React.useEffect (()=>{
-        const correctAnswersArray = alldata.map ((data)=>{
-            return (
-                data.correct_answer
-            )
-        })
-        setCorrectAnswers(correctAnswersArray)
-    }, [alldata])
-
 
     if (loading) {
         return (
