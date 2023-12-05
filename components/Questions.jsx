@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-export default function Questions ({data, correctanswers}) {
+export default function Questions ([data, correctanswers]) {
   
     const [answers, setAnswers] = React.useState([])
 
@@ -13,18 +13,23 @@ export default function Questions ({data, correctanswers}) {
 
     React.useEffect(()=>{
 
-        data.forEach((item)=>{
-            let answersArr = []
-            answersArr.push(item.correct_answer)
-            answersArr.push(item.incorrect_answers)
-            answersArr = answersArr.flat()
-            answersArr = shuffle(answersArr)
-            console.log(answersArr)
-            setAnswers(answersArr)
-        })}, [data])
+        const answersArr = data.map((item)=>{
+            let emptyArr = []
+            emptyArr.push(item.correct_answer)
+            emptyArr.push(item.incorrect_answers)
+            emptyArr = answersArr.flat()
+            emptyArr = shuffle(answersArr)
+            return emptyArr
+           
+            
+        })
+            
+        setAnswers (answersArr)
+   
+    }, [data])
     
   
-   
+    console.log(answers)
 
     return (
         <>
