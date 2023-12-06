@@ -40,7 +40,7 @@ export default function Quiz () {
                 data={alldata}
                 correctanswers = {correctAnswers}
             />
-            <button>Check my answers</button>
+            
     
         </>
     )
