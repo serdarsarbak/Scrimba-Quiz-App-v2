@@ -2,14 +2,14 @@ import React from 'react'
 import Answers from './Answers'
 
 
-export default function Questions ({data, correctanswers}) {
+export default function Questions ({data, correctanswers, startAgain}) {
 
     const [answers, setAnswers] = React.useState([])
     const [countAns, setCountAns] = React.useState([])
+    const [checkResult, setCheckResult] = React.useState(false)
     const [tr, setTr] = React.useState(false)
+    const [numCorrect, setNumCorrect] = React.useState()
 
- 
-    
     // function that makes array randomly sorted
     function shuffle(array) {
     return array.sort(() => Math.random() - 0.5);
@@ -31,12 +31,7 @@ export default function Questions ({data, correctanswers}) {
     const logData = data.map(()=>([]))
     setCountAns (logData)
 
-   
-
     }, [data])
-
-    console.log(answers)
- 
 
     function clicked (index, questionNum) {
         
@@ -54,15 +49,27 @@ export default function Questions ({data, correctanswers}) {
     }
 
     function checkAns () {
+
+        setCheckResult(true)
         
         const myAnswers = answers.map((answer, index)=>{
             return (answer[countAns[index]])
         })
 
-        console.log('correctanswers', correctanswers)
-        console.log('myAnswers', myAnswers)
-    }
 
+
+        console.log('myanswers', myAnswers)
+        let correctAns = 0
+        myAnswers.forEach((answer,index)=>{
+            if (answer===correctanswers[index]) {
+               correctAns ++
+                
+            }
+            setNumCorrect (correctAns)
+        })
+
+
+    }
 
     return (
         <>
@@ -71,13 +78,15 @@ export default function Questions ({data, correctanswers}) {
         return(
              <>
                 <h1>{data.question}</h1>
-                <div><Answers answer={answers[index]} clicked={clicked} questionNum={index} logAns={countAns[index]}  /></div>
+                <div><Answers answer={answers[index]} clicked={clicked} questionNum={index} logAns={countAns[index]} checkResult={checkResult} correctanswers={correctanswers}  /></div>
                     
             </>
 
     )})}
             <br></br>
-            <button onClick={()=>{checkAns()}}>Check my answers</button>
+            {!checkResult? <button onClick={()=>{checkAns()}}>Check my answers</button> : ''}
+            {checkResult? <p>You have {numCorrect}/{data.length} correct Answers</p> : ''}
+            {checkResult? <button onClick={()=>{startAgain}}>New Game</button> : ''}
         </>
     )
 }

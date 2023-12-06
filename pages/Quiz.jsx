@@ -8,6 +8,7 @@ export default function Quiz () {
     const [loading, setLoading] = React.useState(true)
     const [alldata, setAlldata] = React.useState([])
     const [correctAnswers, setCorrectAnswers] = React.useState([])
+    const [newGame, setNewGame] = React.useState(false)
 
     React.useEffect(()=>{
         fetch ('https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple')
@@ -31,6 +32,12 @@ export default function Quiz () {
         )
     }
 
+    function startAgain () {
+        setNewGame (!newGame)
+        console.log('newgame')
+        console.log(newGame)
+    }
+
     return (
         <>
 
@@ -39,6 +46,7 @@ export default function Quiz () {
             <Questions 
                 data={alldata}
                 correctanswers = {correctAnswers}
+                startAgain = {startAgain}
             />
             
     

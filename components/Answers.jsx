@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Answers ({answer, clicked, questionNum, logAns}) {
+export default function Answers ({answer, clicked, questionNum, logAns, checkResult, correctanswers }) {
 
     const [loading, setLoading] = React.useState(true)  
     const [click, setClick] = React.useState({}) 
@@ -9,57 +9,58 @@ export default function Answers ({answer, clicked, questionNum, logAns}) {
         if (answer) {
             setLoading (false)
         }
-
- 
-
     }, [answer])
 
     if (loading) {
         return null
     }
 
-    // function styleFunction () {
-    //     if (countAns[questionNum]) {
-          
-    //         return ({
-                
-    //             backgroundColor: "#59E391"}
-    //         ) 
-    //     } 
-        
-    // }
-
-  
-
-
+ 
+   
     function styleButton (index) {
-        console.log('button clicked')
-        if (logAns===index) {
+        if (!checkResult) {
+            if (logAns===index) {
 
             return (
                 {
-    
                     backgroundColor: "#59E391"
                 }
             )
+        }}
+        if (checkResult) {
+            if (index === answer.indexOf(correctanswers[questionNum])) {
+                return (
+                    {
+                        fontWeight : "bold",
+                        backgroundColor: "#59E391",
+                        disabled: 'false'
+                    })}
 
-        }
-    }
-
-    
+            if (logAns===index) {
+                if (index === answer.indexOf(correctanswers[questionNum])) {
+                    return (
+                        {
+                            backgroundColor: "#59E391"
+                        }
+                    )} else {
+                            return (
+                                {
+                                    backgroundColor: "red"
+                                }
+                            )  
+                    }
+    }}}   
     
     return (
         <>
             <div>
                 {answer.map((singleAns, index)=>{
                     return (
-                        <button disabled={false} style = {styleButton(index)} onClick={()=>{clicked(index, questionNum)}}>{singleAns}</button>
+                        <button disabled={checkResult} style = {styleButton(index)} onClick={()=>{clicked(index, questionNum)}}>{singleAns}</button>
                     )
                 })}
                
             </div>
-                
-            
         </>
     )
     
