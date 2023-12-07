@@ -1,4 +1,5 @@
 import React from 'react'
+import {decode}  from 'html-entities';
 
 export default function Answers ({answer, clicked, questionNum, logAns, checkResult, correctanswers }) {
 
@@ -56,7 +57,7 @@ export default function Answers ({answer, clicked, questionNum, logAns, checkRes
             <div>
                 {answer.map((singleAns, index)=>{
                     return (
-                        <button disabled={checkResult} style = {styleButton(index)} onClick={()=>{clicked(index, questionNum)}}>{singleAns}</button>
+                        <button disabled={checkResult} style = {styleButton(index)} onClick={()=>{clicked(index, questionNum)}}>{decode(singleAns)}</button>
                     )
                 })}
                

@@ -1,6 +1,7 @@
 import React from 'react'
 import Answers from './Answers'
-
+import {Link} from 'react-router-dom'
+import {decode}  from 'html-entities';
 
 export default function Questions ({data, correctanswers, startAgain}) {
 
@@ -17,19 +18,18 @@ export default function Questions ({data, correctanswers, startAgain}) {
     
     React.useEffect(()=>{
     
-    const newArr = data.map((item)=>{
-    let answersArr = []
-    answersArr.push(item.correct_answer)
-    answersArr.push(item.incorrect_answers)
-    answersArr = answersArr.flat()
-    answersArr = shuffle(answersArr)
-    return answersArr
-    })
-    
-    setAnswers (newArr)
-
-    const logData = data.map(()=>([]))
-    setCountAns (logData)
+        const newArr = data.map((item)=>{
+        let answersArr = []
+        answersArr.push(item.correct_answer)
+        answersArr.push(item.incorrect_answers)
+        answersArr = answersArr.flat()
+        answersArr = shuffle(answersArr)
+        return answersArr
+        })
+        
+        setAnswers (newArr)
+        const logData = data.map(()=>([]))
+        setCountAns (logData)
 
     }, [data])
 
@@ -40,35 +40,27 @@ export default function Questions ({data, correctanswers, startAgain}) {
             oldData[questionNum] = index
             console.log('clicked')
             return (oldData)
-
         })
 
         setTr((old)=>{
             return (!tr)})
-        
     }
 
     function checkAns () {
 
         setCheckResult(true)
-        
         const myAnswers = answers.map((answer, index)=>{
             return (answer[countAns[index]])
         })
-
-
 
         console.log('myanswers', myAnswers)
         let correctAns = 0
         myAnswers.forEach((answer,index)=>{
             if (answer===correctanswers[index]) {
                correctAns ++
-                
             }
             setNumCorrect (correctAns)
         })
-
-
     }
 
     return (
@@ -77,16 +69,14 @@ export default function Questions ({data, correctanswers, startAgain}) {
             {data.map((data, index)=>{
         return(
              <>
-                <h1>{data.question}</h1>
-                <div><Answers answer={answers[index]} clicked={clicked} questionNum={index} logAns={countAns[index]} checkResult={checkResult} correctanswers={correctanswers}  /></div>
-                    
+                <h1>{decode(data.question)}</h1>
+                <div><Answers answer={answers[index]} clicked={clicked} questionNum={index} logAns={countAns[index]} checkResult={checkResult} correctanswers={correctanswers}  /></div>   
             </>
-
     )})}
             <br></br>
             {!checkResult? <button onClick={()=>{checkAns()}}>Check my answers</button> : ''}
             {checkResult? <p>You have {numCorrect}/{data.length} correct Answers</p> : ''}
-            {checkResult? <button onClick={()=>{startAgain}}>New Game</button> : ''}
+            {checkResult? <Link to='/'><button onClick={()=>{startAgain()}}>New Quiz</button></Link> : ''}
         </>
     )
 }

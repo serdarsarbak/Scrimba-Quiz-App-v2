@@ -1,8 +1,11 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
 import Questions from '../components/Questions'
+import {decode}  from 'html-entities';
 
-export default function Quiz () {
+export default function Quiz ({}) {
+    let location = useLocation();
+  
 
 
     const [loading, setLoading] = React.useState(true)
@@ -11,20 +14,21 @@ export default function Quiz () {
     const [newGame, setNewGame] = React.useState(false)
 
     React.useEffect(()=>{
-        fetch ('https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple')
+   
+        fetch (`https://opentdb.com/api.php?amount=${location.state.num}&category=9&difficulty=${location.state.difficulty}&type=multiple`)
             .then (res=>res.json())
             .then (data=>{
                 setAlldata(data.results)
                 const correctAnswersArray = data.results.map ((data)=>{
                     return (
-                        data.correct_answer
+                        decode(data.correct_answer)
                     )
                 })
                 setCorrectAnswers(correctAnswersArray)
             })
             setLoading(false)
            
-    },[])
+    },[newGame])
 
     if (loading) {
         return (
@@ -33,9 +37,13 @@ export default function Quiz () {
     }
 
     function startAgain () {
-        setNewGame (!newGame)
+        console.log('ss')
+        setNewGame (!newGame)   
         console.log('newgame')
         console.log(newGame)
+        setAlldata([])
+        setLoading(true)
+
     }
 
     return (
