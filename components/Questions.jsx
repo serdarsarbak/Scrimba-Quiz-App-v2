@@ -75,7 +75,7 @@ export default function Questions ({data, correctanswers, startAgain}) {
     )})}
             <br></br>
             {!checkResult? <button onClick={()=>{checkAns()}}>Check my answers</button> : ''}
-            {checkResult? <p>You have {numCorrect}/{data.length} correct Answers</p> : ''}
+            {checkResult? <p>You have {numCorrect}/{data.length} correct answers</p> : ''}
             {checkResult? <Link to='/'><button onClick={()=>{startAgain()}}>New Quiz</button></Link> : ''}
         </>
     )
