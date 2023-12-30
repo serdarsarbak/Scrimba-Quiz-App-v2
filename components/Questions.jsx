@@ -17,7 +17,6 @@ export default function Questions ({data, correctanswers, startAgain}) {
     }
     
     React.useEffect(()=>{
-    
         const newArr = data.map((item)=>{
         let answersArr = []
         answersArr.push(item.correct_answer)
@@ -36,7 +35,6 @@ export default function Questions ({data, correctanswers, startAgain}) {
     function clicked (index, questionNum) {
         
         setCountAns((oldData)=>{
-           
             oldData[questionNum] = index
             console.log('clicked')
             return (oldData)
@@ -47,13 +45,11 @@ export default function Questions ({data, correctanswers, startAgain}) {
     }
 
     function checkAns () {
-
         setCheckResult(true)
         const myAnswers = answers.map((answer, index)=>{
             return (answer[countAns[index]])
         })
 
-        console.log('myanswers', myAnswers)
         let correctAns = 0
         myAnswers.forEach((answer,index)=>{
             if (answer===correctanswers[index]) {
@@ -65,7 +61,6 @@ export default function Questions ({data, correctanswers, startAgain}) {
 
     return (
         <>
-            <p>myComponents</p>
             {data.map((data, index)=>{
         return(
              <>

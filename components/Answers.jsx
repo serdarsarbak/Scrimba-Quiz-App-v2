@@ -15,9 +15,7 @@ export default function Answers ({answer, clicked, questionNum, logAns, checkRes
     if (loading) {
         return null
     }
-
- 
-   
+    
     function styleButton (index) {
         if (!checkResult) {
             if (logAns===index) {

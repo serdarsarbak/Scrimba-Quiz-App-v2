@@ -5,8 +5,6 @@ import {decode}  from 'html-entities';
 
 export default function Quiz ({}) {
     let location = useLocation();
-  
-
 
     const [loading, setLoading] = React.useState(true)
     const [alldata, setAlldata] = React.useState([])
@@ -37,18 +35,13 @@ export default function Quiz ({}) {
     }
 
     function startAgain () {
-        console.log('ss')
         setNewGame (!newGame)   
-        console.log('newgame')
-        console.log(newGame)
         setAlldata([])
         setLoading(true)
-
     }
 
     return (
         <>
-
             <Link to='/'>Home page</Link>
             <h1>Quiz page</h1>
             <Questions 
